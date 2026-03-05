@@ -1,16 +1,20 @@
+import "./formvalidate.css";
 export default function FormValidate({data , error, backClick, nextClick}){
     
 return(
-    <form>
-      {data.map((input) => (
-        <div key={input.id}>
+  <div className="form-div">
+    <form className="form-something">
+      {data.map((input, index) => (
+        <div key={index}>
           <label>{input.name}</label>
+          <br />
           <input
             type={input.type}
             value={input.value}
-            onChange={(e) => input.onChange(e.target.value)}
+            onChange={(e) =>input.onChange && input.onChange(e.target.value)}
             placeholder={input.placeholder}
           />
+          <br />
           {error[input.name?.toLowerCase()?.replace("*","")] && (
             <p style={{ color: "red" }}>
             {error[input.name?.toLowerCase()?.replace("*","")]}
@@ -18,8 +22,10 @@ return(
           )}
         </div>
       ))}
-      <button onClick={backClick}>Back</button>
-      <button onClick={nextClick}>Next</button>
+      <button type="button" onClick={backClick}>Back</button>
+      <button type="button" onClick={nextClick}>Next</button>
     </form>
+
+  </div>
 )
 }

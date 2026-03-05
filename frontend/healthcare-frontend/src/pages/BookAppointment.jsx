@@ -7,18 +7,8 @@ export default function  BookAppointment(){
         reasons:{ problem:"", symptoms:""}        
     }
     const [details, setDetails] = useState(initState);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const [errMsg, setErrMsg] = useState({});
-
-    // const hanldeChange = (state, field, value) =>{
-    //     setDetails(prev=>(
-    //         {...prev,
-    //             [section]:{
-    //                 ...prev[state], [field]:value
-    //             }
-    //         }
-    //     ))
-    // };
 
 const handleChange = (section, field, value) => {
   setDetails(prev => ({
@@ -36,7 +26,7 @@ const handleChange = (section, field, value) => {
         const{name, age, phone, email} = details.personalInfo;
 
         if(!name || name[0]!==name[0].toUpperCase()){
-            err.name ="please enter valid email";
+            err.name ="please enter valid Name";
         }
         if(!age){
             err.age ="Enter Age";
@@ -62,6 +52,7 @@ const handleChange = (section, field, value) => {
         if(!symptoms){
             err.symptoms ="Required Field";
         }
+        return err;
     };
 
 
@@ -87,20 +78,20 @@ const handleChange = (section, field, value) => {
 
     const firstForm =[
         {name:"Name*", type:"text", value:details.personalInfo.name , 
-            onchange:(value)=> handleChange("personalInfo", "name",value), placeholder:"Enter Name"},
+            onChange:(value)=> handleChange("personalInfo", "name",value), placeholder:"Enter Name"},
         {name:"Age*", type:"text", value:details.personalInfo.age , 
-            onchange: (value)=> handleChange("personalInfo", "age",value) , placeholder:"Age"},
+            onChange: (value)=> handleChange("personalInfo", "age",value) , placeholder:"Age"},
         {name:"Email*", type:"text", value: details.personalInfo.email, 
-            onchange: (value)=> handleChange("personalInfo", "email",value) , placeholder:"Enter Email"},
+            onChange: (value)=> handleChange("personalInfo", "email",value) , placeholder:"Enter Email"},
         {name:"Phone*", type:"text", value: details.personalInfo.phone, 
-            onchange: (value)=> handleChange("personalInfo", "phone",value), placeholder:"Enter contact no."}
+            onChange: (value)=> handleChange("personalInfo", "phone",value), placeholder:"Enter contact no."}
     ];
 
     const secondForm =[
         {name:"Problem*", type:"text", value: details.reasons.problem, 
-            onchange: (value)=> handleChange("reasons", "problem",value), placeholder:"What's the Problem?"},
+            onChange: (value)=> handleChange("reasons", "problem",value), placeholder:"What's the Problem?"},
         {name:"Symptoms*", type:"text", value: details.reasons.symptoms, 
-            onchange: (value)=> handleChange("reasons", "symptoms",value), placeholder:"Symptoms are?"}
+            onChange: (value)=> handleChange("reasons", "symptoms",value), placeholder:"Symptoms are?"}
     ]
 return(
     <div>
@@ -111,7 +102,7 @@ return(
             <FormValidate data={secondForm} error={errMsg} backClick={backButton} nextClick={nextButton}/>
         )}
         {page===3 && (
-            <SubmitPage data={details} setData={setDetails} onSubmit={handleSubmit}/>
+            <SubmitPage data={details} setData={setDetails} />
         )}
     </div>
 )
