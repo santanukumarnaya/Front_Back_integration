@@ -1,9 +1,11 @@
 import "./formvalidate.css";
+
 export default function FormValidate({data , error, backClick, nextClick}){
     
 return(
   <div className="form-div">
     <form className="form-something">
+
       {data.map((input, index) => (
         <div key={index}>
           <label>{input.name}</label>
