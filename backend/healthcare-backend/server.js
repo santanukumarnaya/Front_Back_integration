@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/authRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
+const signUpRoutes = require("./routes/signUpRoutes")
 
 const app = express();
 
@@ -16,8 +17,8 @@ app.use(express.json());
 //   .catch(err => console.log(err));
 
 app.use("/api/auth", authRoutes);
-
+app.use("/api/user", signUpRoutes);
 app.use("/api/appointments", appointmentRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/appointments", appointmentRoutes);
+// app.use("/api/auth", authRoutes);
+// app.use("/api/appointments", appointmentRoutes);
 app.listen(5000, () => console.log("Server running on port 5000"));
