@@ -18,9 +18,9 @@ export default function LoginPage(){
             if(role==="doctor"){
                 navigate("/doctorPage");
                 console.log("fetching doctor")
-            }else if(role==="pateint"){
+            }else if(role==="patient"){
                 navigate("/pateintsPage");
-                console.log("fetching pateint");
+                console.log("fetching patient");
             }else{
                 console.log("Something odd is happening");
             }
@@ -39,7 +39,7 @@ export default function LoginPage(){
             onChange: setEmail
         },
         {
-            name:"Passeord",
+            name:"Password",
             type:"password",
             placeholder:"Enter password",
             value: password,

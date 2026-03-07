@@ -18,11 +18,10 @@ export default function SubmitPage({data, setData}){
 //  },[]);
 
     // we don't actually need the useState here but for my reason for conole i am using it nothing else;
-    const handleSubmit = async () =>{
-        // e.preventDefault();
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
 
         const formData ={
-            id: Date.now(),
             name:data.personalInfo.name,
             age:data.personalInfo.age,
             email:data.personalInfo.email,

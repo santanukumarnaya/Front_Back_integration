@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useReducer } from "react";
+import { useReducer } from "react";
 
 const formState ={
     name:"",
@@ -43,7 +43,7 @@ const handelReducer = (state, action) =>{
                     error = "Enter valid email Id";
                 }
             }
-            if(field==="Password"){
+            if(field==="password"){
                 const passRegex = /^[A-Z](?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{7,}$/;
                 if(!value|| !passRegex.test(value)){
                     error = "Enter Valid Password[uppercase, symbol, number, min 8 character]"
@@ -56,7 +56,7 @@ const handelReducer = (state, action) =>{
             }
             if(field === "role"){
                 if(!role){
-                    error = "Required"
+                    error = "Please select One";
                 }
             }
             return {
@@ -78,14 +78,48 @@ export default function SignUpPage(){
 
     const handlePost = async() =>{
             const signUpData = {
-            id: Date.now(),
             name:state.name,
             email:state.email,
             password:state.password,
-            role:state.role
+            role:state.role.toLowerCase()
             };
+            
+            try{
+                const response = await axios.post(
+                    "http://localhost:5000/api/user/create",
+                signUpData);
 
-            const response = await axios.post("")
+                alert("Signed up Succesfully");
+
+            }catch(error){
+                console.error(error);
+                alert("Error");
+            }
     };
-return
+return(
+    <div>
+        <form onSubmit={handlePost}>
+            <div>
+                <label>Name*</label>
+                <input type="text" onChange={()=>dispatch({type:"HANDLE_CHANGE"})}/>
+                {state.err.name && <p style={{color:"red"}}>{state.err.name}</p> }
+                <label>Email</label>
+                <input type="text" onChange={()=>dispatch({type:"HANDLE_CHANGE"})} />
+                {state.err.email && <p style={{color:"red"}}>{state.err.email}</p> }
+                <label>Password*</label>
+                <input type="text" onChange={()=>dispatch({type:"HANDLE_CHANGE"})} />
+                {state.err.password && <p style={{color:"red"}}>{state.err.password}</p> }
+                <label>Confirm Password*</label>
+                <input type="text" onChange={()=>dispatch({type:"HANDLE_CHANGE"})}/>
+                {state.err.confirm && <p style={{color:"red"}}>{state.err.confirm}</p> }
+                <label>Role</label>
+                <select name="" id="" onChange={()=>dispatch({type:"HANDLE_CHANGE"})}>
+                    <option value="">Patient</option>
+                    <option value="">Doctor</option>
+                </select>
+                {state.err.role && <p style={{color:"red"}}>{state.err.role}</p> }
+            </div>
+        </form>
+    </div>
+)
 }
