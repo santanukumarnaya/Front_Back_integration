@@ -55,8 +55,8 @@ const handelReducer = (state, action) =>{
                 }
             }
             if(field === "role"){
-                if(!role){
-                    error = "Please select One";
+                if(!value){
+                    error = "Please select Role";
                 }
             }
             return {
@@ -82,8 +82,7 @@ export default function SignUpPage(){
             email:state.email,
             password:state.password,
             role:state.role.toLowerCase()
-            };
-            
+            };            
             try{
                 const response = await axios.post(
                     "http://localhost:5000/api/user/create",
@@ -100,24 +99,40 @@ return(
     <div>
         <form onSubmit={handlePost}>
             <div>
-                <label>Name*</label>
-                <input type="text" onChange={()=>dispatch({type:"HANDLE_CHANGE"})}/>
-                {state.err.name && <p style={{color:"red"}}>{state.err.name}</p> }
-                <label>Email</label>
-                <input type="text" onChange={()=>dispatch({type:"HANDLE_CHANGE"})} />
-                {state.err.email && <p style={{color:"red"}}>{state.err.email}</p> }
-                <label>Password*</label>
-                <input type="text" onChange={()=>dispatch({type:"HANDLE_CHANGE"})} />
-                {state.err.password && <p style={{color:"red"}}>{state.err.password}</p> }
-                <label>Confirm Password*</label>
-                <input type="text" onChange={()=>dispatch({type:"HANDLE_CHANGE"})}/>
-                {state.err.confirm && <p style={{color:"red"}}>{state.err.confirm}</p> }
-                <label>Role</label>
-                <select name="" id="" onChange={()=>dispatch({type:"HANDLE_CHANGE"})}>
+
+                <label>Name<span style={{color:"red"}}>*</span></label>
+                <input type="text" 
+                onChange={(e)=>dispatch({type:"HANDLE_CHANGE", payload:{field: "name", value: e.target.value}})} 
+                className="signUp-input"/>
+                {state.err.name && (<p style={{color:"red"}}>{state.err.name}</p>) }
+
+                <label>Email<span style={{color:"red"}}>*</span></label>
+                <input type="text" 
+                onChange={(e)=>dispatch({type:"HANDLE_CHANGE", payload:{field: "email", value: e.target.value}})} 
+                className="signUp-input"/>
+                {state.err.email && (<p style={{color:"red"}}>{state.err.email}</p>) }
+                
+                <label>Password<span style={{color:"red"}}>*</span></label>
+                <input type="text" 
+                onChange={(e)=>dispatch({type:"HANDLE_CHANGE", payload:{field: "password", value: e.target.value}})} 
+                className="signUp-input"/>
+                {state.err.password && (<p style={{color:"red"}}>{state.err.password}</p>) }
+                
+                <label>Confirm Password<span style={{color:"red"}}>*</span></label>
+                <input type="text" 
+                onChange={(e)=>dispatch({type:"HANDLE_CHANGE", payload:{field: "confrPassword", value: e.target.value}})} 
+                className="signUp-input"/>
+                {state.err.confirm && (<p style={{color:"red"}}>{state.err.confirm}</p>) }
+                
+                <label>Role<span style={{color:"red"}}>*</span></label>
+                <select itemType="text" 
+                onChange={(e)=>dispatch({type:"HANDLE_CHANGE", payload:{field: "role", value: e.target.value}})} 
+                className="signUp-input">
                     <option value="">Patient</option>
                     <option value="">Doctor</option>
                 </select>
-                {state.err.role && <p style={{color:"red"}}>{state.err.role}</p> }
+                {state.err.role && (<p style={{color:"red"}}>{state.err.role}</p>)}
+                {/* without parentesis is fine if there is single line but for multi lines parenthesis is needed */}
             </div>
         </form>
     </div>

@@ -29,3 +29,20 @@
     /* align-self: right; */
     margin-right: auto;
 }
+
+.modal_popup{
+    align-items: center;
+    width: 150px;
+    height: 100px;
+    position: absolute;
+
+    background: white;
+    padding: 3px;
+    border-radius: 4px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}

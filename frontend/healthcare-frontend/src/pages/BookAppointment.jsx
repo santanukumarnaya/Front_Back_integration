@@ -2,6 +2,7 @@ import { useState } from "react";
 import FormValidate from "../components/FormValidate";
 import SubmitPage from "./SubmitPage";
 export default function  BookAppointment(){
+
     const initState = {
         personalInfo:{name:"", age:"", phone:"", email:""},
         reasons:{ problem:"", symptoms:""}        

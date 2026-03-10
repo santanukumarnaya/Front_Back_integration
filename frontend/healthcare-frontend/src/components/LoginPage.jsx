@@ -12,9 +12,11 @@ export default function LoginPage(){
             const response = await axios.post("http://localhost:5000/api/auth/login", {email, password});
             
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("name", response.data.user.name);
+            localStorage.setItem("id", response.data.user.id);
             console.log(response.data);
 
-            const role = response.data.user.role;
+            const role = response.data.user.role.toLowerCase();
             if(role==="doctor"){
                 navigate("/doctorPage");
                 console.log("fetching doctor")

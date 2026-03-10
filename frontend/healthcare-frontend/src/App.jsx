@@ -5,6 +5,9 @@ import PateintsPage from "./pages/PateintsPage";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import BookAppointment from "./pages/BookAppointment";
+import SignUpDoctor from "./components/signUpPageDoctor";
+import SignUpPage from "./components/SignUpPage";
+
 import "./app.css"
 
 export default function App(){
@@ -17,6 +20,8 @@ export default function App(){
         <Route path="/doctorPage" element={<DoctorPage/>} />
         <Route path="/pateintsPage" element={<PateintsPage/>} />
         <Route path="/bookAppointment" element={<BookAppointment/>}/>
+        <Route path="/signUpDoctor" element={<SignUpDoctor/>}/>
+        <Route path="/signUpPage" element={<SignUpPage/>}/>
       </Routes>
     </BrowserRouter>
   )

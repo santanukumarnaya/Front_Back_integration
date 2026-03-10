@@ -1,6 +1,6 @@
 const express = require("express");
 const { createSignUp } = require("../controllers/signUpController");
-const { model } = require("mongoose");
+// const { model } = require("mongoose");
 
 const router = express.Router();
 
