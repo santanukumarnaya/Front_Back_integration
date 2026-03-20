@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const {v4: uuidv4} = require("uuid");
+const jwt = require("jsonwebtoken");
 
 exports.createSignUp = (req, res)=>{
     try{
@@ -25,8 +26,11 @@ exports.createSignUp = (req, res)=>{
         fs.writeFileSync(filePath, JSON.stringify(user, null, 2));
         // null → no custom replacer 2 → indent JSON with 2 spaces
 
+        const token = jwt.sign(process.env.JWT_SECRET, {expiresIn: "1d"})
+
         res.status(201).json({
             message:"SignUp details saved successfully",
+            token,
             data: newSignUp
         });
     }catch(error){

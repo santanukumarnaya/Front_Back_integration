@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 
 exports.searchDoctor = async(req, res) => {
     try{
@@ -15,7 +15,7 @@ exports.searchDoctor = async(req, res) => {
         const doctors = JSON.parse(fs.readFileSync(file_path, "utf-8"));
         
         const  doctor = doctors.filter(
-            (u)=> u.department ===department
+            (u)=> u.role==="doctor" && u.department === department
         );
 
         if(doctor.length === 0){

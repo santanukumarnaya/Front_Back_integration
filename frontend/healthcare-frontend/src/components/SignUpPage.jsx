@@ -27,6 +27,7 @@ const handelReducer = (state, action) =>{
                 [field]: value
             };
         }
+        
         case "HANDLE_SUBMIT":{
             
             const {field, value} = action.payload;
@@ -75,7 +76,7 @@ const handelReducer = (state, action) =>{
 };
 export default function SignUpPage(){
     const [state, dispatch] = useReducer(handelReducer, formState);
-
+    
     const handlePost = async() =>{
             const signUpData = {
             name:state.name,
@@ -84,12 +85,15 @@ export default function SignUpPage(){
             role:state.role.toLowerCase()
             };            
             try{
+
+                localStorage.setItem(response.data.token);
+                localStorage.setItem(response.data.data.role);
                 const response = await axios.post(
                     "http://localhost:5000/api/user/create",
                 signUpData);
 
                 alert("Signed up Succesfully");
-
+                
             }catch(error){
                 console.error(error);
                 alert("Error");
@@ -138,3 +142,4 @@ return(
     </div>
 )
 }
+

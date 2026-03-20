@@ -7,8 +7,8 @@ export default function ReForm({data, onSubmit}){
 return(
   <div className="form-div">
     <form className="form-something" onSubmit={handleSubmit}>
-      {data.map((input, index) => (
-        <div key={index}>
+      {data.map((input) => (
+        <div key={input.id}>
           <label className="form-div-label">{input.name}</label>
           <br />
           <input
@@ -18,6 +18,7 @@ return(
             placeholder={input.placeholder}
             className="form-div-input"
           />
+          {data.error && ( <p style={{color:"red"}}>{data.error}</p> )}
         </div>
       ))}
       

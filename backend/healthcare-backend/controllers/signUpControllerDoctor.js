@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const {v4: uuidv4} = require("uuid");
+const jwt = require("jsonwebtoken");
 
 exports.createSignUpDoctor = (req, res)=>{
     try{
@@ -10,7 +11,7 @@ exports.createSignUpDoctor = (req, res)=>{
         const newSignUpDoctor = {
             id: uuidv4(),
             name: req.body.name,
-            eamil:req.body.eamil,
+            email:req.body.email,
             password:req.body.password,
             role:req.body.role,
             department: req.body.department
@@ -26,11 +27,14 @@ exports.createSignUpDoctor = (req, res)=>{
 
         fs.writeFileSync(file_path, JSON.stringify(user, null, 2));
 
+        const token = jwt.sign(process.env.JWT_SECRET, {expiresIn:"1d"});
+
         res.status(201).json({
             message: "SignUp details saved successfully",
+            token,
             data: newSignUpDoctor
         });
     }catch(error){
-        req.status(500).json({error: error.message});
+        res.status(500).json({error: error.message});
     }
 }

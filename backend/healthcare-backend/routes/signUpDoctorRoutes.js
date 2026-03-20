@@ -3,6 +3,6 @@ const {createSignUpDoctor} = require("../controllers/signUpControllerDoctor");
 
 const router = express.Router();
 
-router.post("/search", createSignUpDoctor);
+router.post("/signup", createSignUpDoctor);
 
 module.exports = router;

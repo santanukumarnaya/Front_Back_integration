@@ -2,8 +2,8 @@ const express = require("express");
 const { createAppointment } = require("../controllers/appointmentController");
 const protect = require("../middleware/authMiddleware");
 
-const router = express.Router();
+const route = express.Router();
 
-router.post("/create", protect, createAppointment);
+route.post("/create", protect, createAppointment);
 
-module.exports = router;
+module.exports = route;

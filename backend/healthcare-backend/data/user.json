@@ -1,16 +1,17 @@
 [
-    {
-        "id": 1,
-        "name": "Santanu",
-        "email":"sknayak@gmail.com",
-        "password":"12345",
-        "role":"doctor"
-    },
-    {
-        "id": 2,
-        "name": "Pinu",
-        "email":"pinu@gmail.com",
-        "password":"6789",
-        "role":"patient"
-    }
+  {
+    "id": 1,
+    "name": "Santanu",
+    "email": "sknayak@gmail.com",
+    "password": "12345",
+    "role": "doctor",
+    "department": "Cardiology"
+  },
+  {
+    "id": 2,
+    "name": "Pinu",
+    "email": "pinu@gmail.com",
+    "password": "6789",
+    "role": "patient"
+  }
 ]

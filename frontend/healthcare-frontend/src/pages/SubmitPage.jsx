@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 export default function SubmitPage({data, setData}){
 
     const pId = localStorage.getItem("id");
-    
+
     const [submit, setSubmit] = useState([]);
     const [department, setDepartment] = useState("");
     const [listOfDoc, setListOfDoc] = useState([]);
     const [searchDoc, setSearchDoc] = useState("");
-    const [selectDoc, setSelectDoc] = useState(null);   
+    const [selectDoc, setSelectDoc] = useState(null); 
+    const [listFiltered, setListFiltered] = useState([]);
+    
     const handleChange = (section, field, value) => {
     setData(prev => ({
         ...prev,
@@ -23,7 +24,7 @@ export default function SubmitPage({data, setData}){
         e.preventDefault();
 
         const formData ={
-            pateintId:pId,
+            patientId:pId,
             name:data.personalInfo.name,
             age:data.personalInfo.age,
             email:data.personalInfo.email,
@@ -31,7 +32,8 @@ export default function SubmitPage({data, setData}){
             problem:data.reasons.problem,
             symptoms: data.reasons.symptoms,
             doctorId: selectDoc?.id,
-            doctor:selectDoc
+            doctor: selectDoc?.name,
+            department:selectDoc?.department,            
         }
 
             setSubmit((prev)=>[
@@ -50,6 +52,8 @@ export default function SubmitPage({data, setData}){
                     }
                 );
                 alert("Appoientment Booked Successfully");
+
+                console.log( "response",response);
             }catch(error){
                 console.error(error);
                 alert("Error");
@@ -72,6 +76,14 @@ export default function SubmitPage({data, setData}){
     const filteredDoctors = listOfDoc.filter((doc)=>
     doc.name.toLowerCase().includes(searchDoc.toLowerCase())
     );
+    
+    
+    useEffect(()=>{
+        if(!selectDoc){
+            setListFiltered(filteredDoctors);
+        }
+    },[searchDoc, listOfDoc]);
+
 
 
     return(
@@ -106,26 +118,27 @@ export default function SubmitPage({data, setData}){
                 <label>Which Department</label>
                 <select value={department} 
                 onChange={(e)=>{const value =e.target.value; setDepartment(value); handleSearch(value)}}>
-                    <option value="">Cardiology</option>
-                    <option value="">Neurology</option>
-                    <option value="">Gastroenterology</option>
-                    <option value="">Dermatology</option>
-                    <option value="">Orthopedics</option>
-                    <option value="">Pediatrics</option>
-                    <option value="">Gynecology</option>
-                    <option value="">Oncology</option>
-                    <option value="">Urology</option>
-                    <option value="">Endocrinology</option>
-                    <option value="">Nephrology</option>
-                    <option value="">Pulmonology</option>
-                    <option value="">Psychiatry</option>
-                    <option value="">Ophthalmology</option>
-                    <option value="">ENT (Ear Nose Throat)</option>
-                    <option value="">General Medicine</option>
-                    <option value="">Radiology</option>
-                    <option value="">Anesthesiology</option>
-                    <option value="">Rheumatology</option>
-                    <option value="">Hematology</option>
+                    <option value="">Selecct department</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="Gastroenterology">Gastroenterology</option>
+                    <option value="Dermatology">Dermatology</option>
+                    <option value="Orthopedics">Orthopedics</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                    <option value="Gynecology">Gynecology</option>
+                    <option value="Oncology">Oncology</option>
+                    <option value="Urology">Urology</option>
+                    <option value="Endocrinology">Endocrinology</option>
+                    <option value="Nephrology">Nephrology</option>
+                    <option value="Pulmonology">Pulmonology</option>
+                    <option value="Psychiatry">Psychiatry</option>
+                    <option value="Ophthalmology">Ophthalmology</option>
+                    <option value="ENT (Ear Nose Throat)">ENT (Ear Nose Throat)</option>
+                    <option value="General Medicine">General Medicine</option>
+                    <option value="Radiology">Radiology</option>
+                    <option value="Anesthesiology">Anesthesiology</option>
+                    <option value="Rheumatology">Rheumatology</option>
+                    <option value="Hematology">Hematology</option>
                 </select>
 
                 <label >Doctor's Name</label>
@@ -133,11 +146,11 @@ export default function SubmitPage({data, setData}){
                     value={searchDoc}
                     onChange={(e)=>setSearchDoc(e.target.value)}
                 />
-                {searchDoc && filteredDoctors.length> 0 && (
+                {searchDoc && listFiltered.length> 0 && (
                     <div>
-                        {filteredDoctors.map((doc)=>(
-                            <div key={doc.id}
-                                onClick={()=> {setSelectDoc(doc); setSearchDoc(doc.name)}}
+                        {listFiltered.map((doc)=>(
+                            <div key={doc.doctorId}
+                                onClick={()=> {setSelectDoc(doc); setSearchDoc(doc.name); setListFiltered([])}}
                             >
                                 {doc.name}
                             </div>

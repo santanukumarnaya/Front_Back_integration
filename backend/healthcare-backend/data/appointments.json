@@ -16,5 +16,21 @@
     "phone": "8018387098",
     "problem": "cold, fever",
     "symptoms": "wet  nose"
+  },
+  {
+    "pateintId": "2",
+    "name": "Santanu Kumar Nayak",
+    "age": "24",
+    "email": "santanukumarnayak02@gmail.com",
+    "phone": "8018387098",
+    "problem": "cold",
+    "symptoms": "wet nose",
+    "doctorId": 1,
+    "doctor": {
+      "id": 1,
+      "name": "Santanu",
+      "department": "Cardiology",
+      "role": "doctor"
+    }
   }
 ]

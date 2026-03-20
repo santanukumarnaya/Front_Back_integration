@@ -7,6 +7,7 @@ export default function LoginPage(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    
     const handleLogin =async()=>{
         try{
             const response = await axios.post("http://localhost:5000/api/auth/login", {email, password});
@@ -14,6 +15,7 @@ export default function LoginPage(){
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("name", response.data.user.name);
             localStorage.setItem("id", response.data.user.id);
+            // localStorage.setItem("role",response.data.user.role);
             console.log(response.data);
 
             const role = response.data.user.role.toLowerCase();

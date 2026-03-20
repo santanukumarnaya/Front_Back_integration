@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useReducer } from "react"
+import { useNavigate } from "react-router-dom";
 
 const formState={
     name:"",
@@ -57,7 +58,7 @@ const handleFormState = (state, action) =>{
                 }
             }
             if(field === "cnfrPassword"){
-                if(!value || value !== password){
+                if(!value || value !== state.password){
                     err = "should be same as password";
                 }
             }
@@ -87,26 +88,44 @@ const handleFormState = (state, action) =>{
 export default function SignUpDoctor(){
     const [state , dispatch] = useReducer(handleFormState , formState);
 
+    const navigate = useNavigate();
+
     const handleSubmit  = async(e) =>{
         e.preventDefault();
+
+        dispatch({type:"HANDLE_SUBMIT", payload:{field:"name", value:state.name}});
+        dispatch({type:"HANDLE_SUBMIT", payload:{field:"email", value:state.email}});
+        dispatch({type:"HANDLE_SUBMIT", payload:{field:"password", value:state.password}});
+        dispatch({type:"HANDLE_SUBMIT", payload:{field:"confrPassword", value:state.confrPassword}});
+        dispatch({type:"HANDLE_SUBMIT", payload:{field:"role", value:state.role}});
+        dispatch({type:"HANDLE_SUBMIT", payload:{field:"department", value:state.department}});
 
         const signUpDataDoc = {
             name: state.name,
             email: state.email,
             password: state.password,
             role: state.role,
-            dipartment: state.dipartment
+            department: state.department
         }
 
         try{
             const response = await axios.post("http://localhost:5000/api/user/create", signUpDataDoc);
+            localStorage.setItem("token",response.data.token);
+            localStorage.setItem("role",response.data.data.role);
 
+            const token = response.data.token;
             console.log("SignUp succesfull");
+
+            if(token){
+                navigate("/doctorPage");
+            }
         }catch(error){
             console.error(error);
             alert("Error"); 
         }
     };
+
+
 return(
     <div>
         <form onSubmit={handleSubmit}>
@@ -140,31 +159,35 @@ return(
             <label>Department<span style={{color:"red"}}>*</span></label>
             <select itemType="text" 
             onChange={(e)=> dispatch({type:"HANDLE_CHANGE", payload:{field: "department", value: e.target.value}})}>
-                <option value="">Cardiology</option>
-                    <option value="">Neurology</option>
-                    <option value="">Gastroenterology</option>
-                    <option value="">Dermatology</option>
-                    <option value="">Orthopedics</option>
-                    <option value="">Pediatrics</option>
-                    <option value="">Gynecology</option>
-                    <option value="">Oncology</option>
-                    <option value="">Urology</option>
-                    <option value="">Endocrinology</option>
-                    <option value="">Nephrology</option>
-                    <option value="">Pulmonology</option>
-                    <option value="">Psychiatry</option>
-                    <option value="">Ophthalmology</option>
-                    <option value="">ENT (Ear Nose Throat)</option>
-                    <option value="">General Medicine</option>
-                    <option value="">Radiology</option>
-                    <option value="">Anesthesiology</option>
-                    <option value="">Rheumatology</option>
-                    <option value="">Hematology</option>
+                    <option>Selecct department</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="Gastroenterology">Gastroenterology</option>
+                    <option value="Dermatology">Dermatology</option>
+                    <option value="Orthopedics">Orthopedics</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                    <option value="Gynecology">Gynecology</option>
+                    <option value="Oncology">Oncology</option>
+                    <option value="Urology">Urology</option>
+                    <option value="Endocrinology">Endocrinology</option>
+                    <option value="Nephrology">Nephrology</option>
+                    <option value="Pulmonology">Pulmonology</option>
+                    <option value="Psychiatry">Psychiatry</option>
+                    <option value="Ophthalmology">Ophthalmology</option>
+                    <option value="ENT (Ear Nose Throat)">ENT (Ear Nose Throat)</option>
+                    <option value="General Medicine">General Medicine</option>
+                    <option value="Radiology">Radiology</option>
+                    <option value="Anesthesiology">Anesthesiology</option>
+                    <option value="Rheumatology">Rheumatology</option>
+                    <option value="Hematology">Hematology</option>
             </select>
             {state.error.department && ( <p style={{color:"red"}}>{state.error.department}</p> )}
 
-
+            <button type="submit">SUBMIT</button>
         </form>
     </div>
 )
 }
+
+
+
